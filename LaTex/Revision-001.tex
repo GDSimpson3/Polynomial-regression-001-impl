@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref} % For clickable links
+\usepackage{amsmath} 
+
+\title{Polynomial Regression Impl001}
+\author{Gavin Simpson}
+\date{December 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Resources}
+
+Github Repository: 
+\href{https://github.com/GDSimpson3/Polynomial-regression-001-impl}{\texttt{github.com/GDSimpson3/Polynomial-regression-001-impl}}
+
+\section{Dynamic Orders}
+
+
+\subsection{Dynamic Exponents 3SLOTS 6PARAM DSQuadratic}
+
+Works on a simple Quadratic Dataset
+
+Uses 6 Parameters:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textit{Symbol} & Meaning \\ \hline
+\textit{Ca} & Coefficient A \\
+\textit{Ea} & Exponent A \\
+\textit{Cb} & Coefficient B \\
+\textit{Eb} & Exponent B \\
+\textit{Cc} & Coefficient C \\
+\textit{Ec} & Exponent C \\ \hline
+\end{tabular}
+\caption{Mapping of symbols to coefficient and exponent terms}
+\end{table}
+
+
+
+Uses the Gradient Descent to find the best exponents and Coefficients
+
+Currently was able to bring MSE down to \textbf{3} with \textbf{20,000} iterations
+
+
+It currently uses 3 static slots in the form of
+
+\[
+Cax^{Ea} + Cbx^{Eb} + Ccx^{Ec}
+\]
+
+as the models Regression line formula
+
+\pagebreak
+
+\subsection{Loss Function}
+
+The loss function that we're applying the Gradient Descent to, which is the mean squared Error.
+
+\subsubsection{Mean Squared Error}
+
+Mean Squared Error:
+\[
+\text{MSE(parameters)} = \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2
+\]
+
+MSE Of a Bivariate Linear Regression line
+
+\[
+\text{MSE(m,b)} = \frac{1}{n} \sum_{i=1}^{n} (mx_i + b - y_i)^2
+\]
+
+MSE Of a Multivariate Polynomial Regression Line
+
+\[
+\text{MSE(a,b,c)} = \frac{1}{n} \sum_{i=1}^{n} (ax^2_i + bx_i + c - y_i)^2
+\]
+
+MSE Of a Multivariate Polynomial Regression Line
+
+\[
+\text{MSE(Ca,Ea,Cb,Eb,Cc,Ec)} = \frac{1}{n} \sum_{i=1}^{n} (Cax^{Ea}_i + Cbx^{Eb}_i + Ccx^{Ec}_i - y_i)^2
+\]
+
+\subsubsection{Partial Derivatives}
+
+Partial Derivatives of a Simple linear regression line
+
+\[
+\frac{\partial \text{MSE(m,b)}}{\partial \text{m}}
+= \frac{2}{n} \sum_{i=1}^n (mx_i + b - y_i - y_i)^1
+    x_i
+\]
+
+\[
+\frac{\partial \text{MSE(m,b)}}{\partial \text{b}}
+= \frac{2}{n} \sum_{i=1}^n (mx_i + b - y_i)^1
+\]
+
+\textbf{Partial Derivatives of a Simple Quadratic regression line
+}
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{a}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+    x^2_i
+\]
+
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{b}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+    x_i
+\]
+
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{c}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+\]
+
+\textbf{Generic Partial Derivatives of a Dynamic Polynomial regression line}
+
+
+with respect to Coefficient N
+
+\[
+\frac{\partial \text{MSE(Cn,En)}}{\partial \text{Cn}}
+= \frac{2}{n} \sum_{i=1}^n (Cnx^{En}_i ... - y_i)^1
+       x^{En}_i
+\]
+
+with respect to Exponent N
+
+\[
+\frac{\partial \text{MSE(Cn, En,......)}}{\partial \text{En}}
+= \frac{2}{n} \sum_{i=1}^n (Cnx^{En}_i ... - y_i)^1
+       Cn[(x^{En}_i)\ln(x_i)]
+\]
+
+\subsection{NTerms}
+
+Aim: Making it dynamic so that it can compute upto N terms
+
+
+
+\end{document}
+
