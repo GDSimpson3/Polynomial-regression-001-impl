@@ -1,0 +1,201 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref} % For clickable links
+\usepackage{amsmath} 
+\usepackage{listings}
+\usepackage{xcolor} % optional, for colors
+
+\title{Polynomial Regression Impl001}
+\author{Gavin Simpson}
+\date{December 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Resources}
+
+Github Repository: 
+\href{https://github.com/GDSimpson3/Polynomial-regression-001-impl}{\texttt{github.com/GDSimpson3/Polynomial-regression-001-impl}}
+
+\section{Dynamic Orders}
+
+
+\subsection{Dynamic Exponents 3SLOTS 6PARAM DSQuadratic}
+
+Works on a simple Quadratic Dataset
+
+Uses 6 Parameters:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textit{Symbol} & Meaning \\ \hline
+\textit{Ca} & Coefficient A \\
+\textit{Ea} & Exponent A \\
+\textit{Cb} & Coefficient B \\
+\textit{Eb} & Exponent B \\
+\textit{Cc} & Coefficient C \\
+\textit{Ec} & Exponent C \\ \hline
+\end{tabular}
+\caption{Mapping of symbols to coefficient and exponent terms}
+\end{table}
+
+
+
+Uses the Gradient Descent to find the best exponents and Coefficients
+
+Currently was able to bring MSE down to \textbf{3} with \textbf{20,000} iterations
+
+
+It currently uses 3 static slots in the form of
+
+\[
+Cax^{Ea} + Cbx^{Eb} + Ccx^{Ec}
+\]
+
+as the models Regression line formula
+
+\pagebreak
+
+\subsection{Loss Function}
+
+The loss function that we're applying the Gradient Descent to, which is the mean squared Error.
+
+\subsubsection{Mean Squared Error}
+
+Mean Squared Error:
+\[
+\text{MSE(parameters)} = \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2
+\]
+
+MSE Of a Bivariate Linear Regression line
+
+\[
+\text{MSE(m,b)} = \frac{1}{n} \sum_{i=1}^{n} (mx_i + b - y_i)^2
+\]
+
+MSE Of a Multivariate Polynomial Regression Line
+
+\[
+\text{MSE(a,b,c)} = \frac{1}{n} \sum_{i=1}^{n} (ax^2_i + bx_i + c - y_i)^2
+\]
+
+MSE Of a Multivariate Polynomial Regression Line
+
+\[
+\text{MSE(Ca,Ea,Cb,Eb,Cc,Ec)} = \frac{1}{n} \sum_{i=1}^{n} (Cax^{Ea}_i + Cbx^{Eb}_i + Ccx^{Ec}_i - y_i)^2
+\]
+
+\subsubsection{Partial Derivatives}
+
+Partial Derivatives of a Simple linear regression line
+
+\[
+\frac{\partial \text{MSE(m,b)}}{\partial \text{m}}
+= \frac{2}{n} \sum_{i=1}^n (mx_i + b - y_i - y_i)^1
+    x_i
+\]
+
+\[
+\frac{\partial \text{MSE(m,b)}}{\partial \text{b}}
+= \frac{2}{n} \sum_{i=1}^n (mx_i + b - y_i)^1
+\]
+
+\textbf{Partial Derivatives of a Simple Quadratic regression line
+}
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{a}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+    x^2_i
+\]
+
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{b}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+    x_i
+\]
+
+\[
+\frac{\partial \text{MSE(a,b,c)}}{\partial \text{c}}
+= \frac{2}{n} \sum_{i=1}^n (ax^2_i + bx_i + c - y_i)^1
+\]
+
+\textbf{Generic Partial Derivatives of a Polynomial regression line}
+
+with respect to Coefficient N
+
+\[
+\frac{\partial \text{MSE(Cn,En)}}{\partial \text{Cn}}
+= \frac{2}{n} \sum_{i=1}^n (Cnx^{En}_i ... - y_i)^1
+       x^{En}_i
+\]
+
+with respect to Exponent N
+
+\[
+\frac{\partial \text{MSE(Cn, En,......)}}{\partial \text{En}}
+= \frac{2}{n} \sum_{i=1}^n (Cnx^{En}_i ... - y_i)^1
+       Cn[(x^{En}_i)\ln(x_i)]
+\]
+
+\pagebreak
+
+\subsection{NTerms}
+
+Aim: Making it dynamic so that it can compute upto N terms
+
+\subsubsection{Normalisation}
+
+Now this here is simply squashing all of our values into \textbf{0 and 1}. EG: The whole Sin X function that goes from 0 to 10 (X), is now squashed into 0 and 1 VIA a normalisation function
+
+\[
+x_{norm} =\frac{x - min(x)}{max(x) - min(x)}
+\]
+\textbf{Why should we Normalise?}
+Our Partial derivative for the Exponents, include a ln(x), If the Values of X are big, we'll get massive gradients which can shoot up the Exponents. Which can result in overflow errors (values too big for variables)
+
+\subsubsection{Exponent Clamping}
+
+Here we're going to Clamp our exponents within a range (between -5 and 8 for now)
+this is another safeguard against exponent explosions. 
+For now we're using the \textbf{Numpy.clip} function
+
+\begin{lstlisting}[language=Python]
+        RegressionTerms[TermIndex][1] =
+        np.clip(RegressionTerms[TermIndex][1], min_exp, 
+        max_exp)
+\end{lstlisting}
+
+\subsubsection{Ensure X is never zero}
+
+Because of our Ln in the exponent function, if we have values of X in our dataset, it'll go straight to negative infinity
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{image.png}
+    \caption{$\lim_{x \to 0} \ln{x} = -\infty$ Diagram}
+    \label{fig:placeholder}
+\end{figure}
+
+Hence we need to get rid of all X values in our dataset that Are 0.
+
+We can do this By clamping X to a Safe Minimum (anything less than ${1  * 10^{-6}}$ will become ${1  * 10^{-6}}$. Including Negatives
+
+\begin{lstlisting}[language=Python]
+       X = np.clip(X, 1e-6, None)
+\end{lstlisting}
+
+\textit{NOTE: THIS IS X, Not Y, X}
+
+\subsubsection{Alpha Configuration}
+
+\begin{lstlisting}[language=Python]
+       AlphaC = 0.01
+       AlphaE = 1e-6
+\end{lstlisting}
+
+Make steps of Exponent almost nano. We dont want the Exponent to be changing too much.
+
+\end{document}
+

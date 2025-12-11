@@ -1,5 +1,9 @@
 # Polynomial Regressions
 
+UPDATE: REFER **README.PDF**, THATS THE UPTODATE DOCUMENTATION FOR THIS PROJECT
+
+<!--
+
 # Dynamic Orders
 
 ## Polynomial_regression_impl_001_Dynamic_Exponents_3SLOTS_6PARAM-DSQuadratic
@@ -23,3 +27,5 @@ Regression lines to map non-linear functions.
 This includes multi-degree predicted values for the loss functions & hence tailored partial derivatives.
 
 Additionally looking to make it Dynamic (up to any degree)
+
+-->
