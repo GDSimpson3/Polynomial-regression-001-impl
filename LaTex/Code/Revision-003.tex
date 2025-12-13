@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref} % For clickable links
+\usepackage{amsmath} 
+\usepackage{listings}
+\usepackage{xcolor} % optional, for colors
+\usepackage{array}
+
+\title{Polynomial Regression Impl 001}
+\author{Gavin Simpson}
+\date{December 2025}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Resources and About}
+
+Date: \textit{13/12/2025}\newline
+Revision: \textit{3}\newline
+\newline
+Github Repository: 
+\href{https://github.com/GDSimpson3/Polynomial-regression-001-impl}{\texttt{github.com/GDSimpson3/Polynomial-regression-001-impl}}
+PDF URL: 
+\href{https://github.com/GDSimpson3/Polynomial-regression-001-impl/blob/main/README.pdf}{\texttt{github.com/GDSimpson3/Polynomial-regression-001-impl/README.pdf}}
+
+
+
+
+\newpage
+
+\section{Dynamic Orders}
+
+
+\subsection{Dynamic Exponents 3SLOTS 6PARAM DSQuadratic}
+
+Works on a simple Quadratic Dataset
+
+Uses 6 Parameters:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textit{Symbol} & Meaning \\ \hline
+\textit{Ca} & Coefficient A \\
+\textit{Ea} & Exponent A \\
+\textit{Cb} & Coefficient B \\
+\textit{Eb} & Exponent B \\
+\textit{Cc} & Coefficient C \\
+\textit{Ec} & Exponent C \\ \hline
+\end{tabular}
+\caption{Mapping of symbols to coefficient and exponent terms}
+\end{table}
+
+
+
+Uses the Gradient Descent to find the best exponents and Coefficients
+
+Currently was able to bring MSE down to \textbf{3} with \textbf{20,000} iterations
+
+
+It currently uses 3 static slots in the form of
+
+\[
+Cax^{Ea} + Cbx^{Eb} + Ccx^{Ec}
+\]
+
