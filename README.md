@@ -8,6 +8,12 @@ NOTE: REFER **README.PDF**, THATS THE UPTODATE DOCUMENTATION FOR THIS PROJECT
 
 <h2>NTerms</h2>
 
+<h3>STAGE 5</h3>
+Term Merging
+
+<h3>STAGE 4</h3>
+Graphing (live)
+
 <h3>STAGE 3</h3>
 Added L1 Regularisation and Dynamic Pruning to eliminate non-essential Terms
 
