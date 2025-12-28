@@ -223,7 +223,7 @@ for I in range(MaxIterations):
     RegressionTerms = unique_terms
 
 
-  # print(f'ITERATION: {I} --- MSE {MSE(RegressionTerms)} --- TERMS {ToString(RegressionTerms)}')
+  print(f'ITERATION: {I} --- MSE {MSE(RegressionTerms)} --- TERMS {ToString(RegressionTerms)}')
 
 
 
