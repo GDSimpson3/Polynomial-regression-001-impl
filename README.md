@@ -8,6 +8,9 @@ NOTE: REFER **README.PDF**, THATS THE UPTODATE DOCUMENTATION FOR THIS PROJECT
 
 <h2>NTerms</h2>
 
+<h3>STAGE 7</h3>
+Term Creation
+
 <h3>STAGE 6</h3>
 Alpha Decay - Currently not used as 10k iterations gives us nowhere near a level to begin to converge
 
